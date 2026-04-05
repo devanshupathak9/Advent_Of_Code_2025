@@ -1,106 +1,115 @@
 #include <iostream>
 #include <vector>
-#include <queue>
 #include <string>
 #include <fstream>
 using namespace std;
 
 template <typename T>
-void print(const T& value) { cout << value << "\n"; }
+void print(T &value) {
+    cout << value << "\n";
+}
 
-bool isValid(int x, int y, int r , int c) {
-    if (x < 0 || x >= r || y < 0 || y >= c) 
+bool isValid(int x, int y, int r, int c) {
+    if (x < 0 || x >= r || y < 0 || y >= c)
         return false;
     return true;
 }
 
-class Solution {
+class Solution
+{
 private:
     int n, m;
-    vector<string> grid;
     vector<pair<int, int>> actions = {
-        {1, 0}, {0, 1}, {-1, 0}, {0, -1}, 
-        {1, 1}, {-1, -1}, {1, -1}, {-1, 1}
-    };
-public: 
-    Solution(const vector<string>& g) : grid(g) {
-        n = grid.size();
-        m = grid[0].size();
+        {1, 0}, {0, 1}, {-1, 0}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}};
+
+public:
+    Solution(const vector<string> &g) {
+        n = g.size();
+        m = g[0].size();
     }
 
-    int solveP1() {
-        int counter = 0;
-        for(int i = 0; i < n; i++) {
-            for(int j = 0; j < m; j++) {
+    vector<pair<int, int>> countRolls(vector<string> &grid, int n, int m) {
+        vector<pair<int, int>> coords;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                int count = 0;
                 if (grid[i][j] == '@') {
-                    int rollCounter = 0;
-                    for(auto action: actions) {
-                        int x = i + action.first;
-                        int y = j + action.second;
-                        if (isValid(x, y, n, m) && grid[x][y] == '@'){
-                            rollCounter += 1;
-                        }
-                    }
-                    if (rollCounter < 4) { counter += 1; }
-                }
-            }
-        }
-        return counter;
-    }
-
-    int findAccessibleRolls() {
-        vector<pair<int,int>> toRemove;
-        for(int i = 0; i < n; i++) {
-            for(int j = 0; j < m; j++) {
-                if (grid[i][j] == '@') {
-    
-                    int rollCounter = 0;
-                    for(auto action : actions) {
-                        int x = i + action.first;
-                        int y = j + action.second;
-    
+                    for (auto it : actions)
+                    {
+                        int x = i + it.first;
+                        int y = j + it.second;
                         if (isValid(x, y, n, m) && grid[x][y] == '@')
-                            rollCounter++;
+                            count++;
                     }
-                    if (rollCounter < 4)
-                        toRemove.push_back({i, j});
+                    if (count < 4)
+                    {
+                        coords.push_back({i, j});
+                    }
                 }
             }
         }
-    
-        for(auto &p : toRemove)
-            grid[p.first][p.second] = '.';
-        return toRemove.size();
-    }
-    
-    int solveP2() {
-        int finalRes = 0;
-        while (1) {
-            int res = findAccessibleRolls();
-            if (res == 0) break;
-            finalRes += res;
-        }
-        return finalRes;
+        return coords;
     }
 
+    int solvep1(vector<string> &grid) {
+        int finalCount = 0;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                int count = 0;
+                if (grid[i][j] == '@')
+                {
+                    for (auto it : actions)
+                    {
+                        int x = i + it.first;
+                        int y = j + it.second;
+                        if (isValid(x, y, n, m) && grid[x][y] == '@')
+                            count++;
+                    }
+                    if (count < 4)
+                        finalCount += 1;
+                }
+            }
+        }
+        return finalCount;
+    }
+
+    int solvep2(vector<string> &grid)
+    {
+        int finalCount = 0;
+        while (true)
+        {
+            vector<pair<int, int>> rolls = countRolls(grid, n, m);
+            if (rolls.size())
+            {
+                finalCount += rolls.size();
+                for (auto it : rolls)
+                {
+                    grid[it.first][it.second] = '.';
+                }
+            }
+            else
+                break;
+        }
+        return finalCount;
+    }
 };
 
 int main() {
-    
-    string line;
-    vector<string> grid;
     ifstream file("data.txt");
-    while (getline(file, line)) {
-        if (!line.empty())
-            grid.push_back(line);
+    string line;
+
+    vector<string> grid;
+    while (getline(file, line))
+    {
+        grid.push_back(line);
     }
-    file.close();
     Solution sol(grid);
-    int res1 = sol.solveP1();
-    print(res1);
-    
-    Solution sol2(grid);
-    int res2 = sol2.solveP2();
-    print(res2);
+    int answer1 = sol.solvep1(grid);
+    print(answer1);
+
+    int answer2 = sol.solvep2(grid);
+    print(answer2);
     return 0;
 }

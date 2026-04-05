@@ -43,6 +43,8 @@ x.x.@@@.x.
 ```
 
 **Consider your complete diagram of the paper roll locations (data.txt). How many rolls of paper can be accessed by a forklift?**
+
+Answer: **1411**
 <hr>
 
 ## Part: 2
@@ -178,3 +180,7 @@ Remove 1 roll of paper:
 Stop once no more rolls of paper are accessible by a forklift. In this example, a total of 43 rolls of paper can be removed.
 
 Start with your original diagram. How many rolls of paper in total can be removed by the Elves and their forklifts?
+
+Answer: **8557**
+
+---

@@ -1,78 +1,91 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include<string>
 using namespace std;
 typedef long long ll;
 
 template <typename T>
-void print(T value) { cout << value << "\n"; }
-
-int findMaxValue(const string &bank, int start, int end) {
-    int maxIdx = -1;
-    int maxVal = -1;
-    for (int i = start; i <= end; i++) {
-        if (bank[i] - '0' > maxVal) {
-            maxVal = bank[i] - '0';
-            maxIdx = i;
-        }
-    }
-    return maxIdx;
+void print(T &value) {
+    cout << value << "\n";
 }
 
-class Solution {
-public: 
-    int findMaxJoltValueP1(string bank) {
-        int nxtIndex = 0;
-        int maxJoltValue = 0;
-        for(int i = 0; i < 2; i++) {
-            int currIndex = findMaxValue(bank, nxtIndex, bank.size() - 2 + i);
-            nxtIndex = currIndex + 1;
-            maxJoltValue = maxJoltValue*10 + (bank[currIndex] - '0');
+int findLargestIndex(string line, int start, int end)
+{
+    int maxValIndex = -1;
+    int maxVal = -1;
+    int n = line.size();
+    for (int i = start; i <= end; i++)
+    {
+        int val = line[i] - '0';
+        if (val > maxVal)
+        {
+            maxVal = val;
+            maxValIndex = i;
         }
-        return maxJoltValue;
     }
-    ll findMaxJoltValueP2(string bank) {
-        int nxtIndex = 0;
-        ll maxJoltValue = 0;
-        for(int i = 0; i < 12; i++) {
-            int currIndex = findMaxValue(bank, nxtIndex, bank.size() - 2 + i);
-            nxtIndex = currIndex + 1;
-            maxJoltValue = maxJoltValue*10 + (bank[currIndex] - '0');
+    return maxValIndex;
+}
+
+class Solution
+{
+public:
+    int solvep1(vector<string> &banks)
+    {
+        int totalOutput = 0;
+        int indx, currIndex, maxJoltage;
+        int n = banks[0].size();
+        for (auto it : banks)
+        {
+            maxJoltage = 0;
+            currIndex = -1;
+            for (int size = 0; size < 2; size++)
+            {
+                indx = findLargestIndex(it, currIndex + 1, n - 2 + size);
+                currIndex = indx;
+                maxJoltage = maxJoltage * 10 + (it[indx] - '0');
+            }
+            totalOutput += maxJoltage;
         }
-        return maxJoltValue;
+        return totalOutput;
     }
-    int solveP1(vector<string>banks) {
-        int totalOutputJoltage = 0;
-        for(auto bank: banks) {
-            int maxJoltValue = findMaxJoltValueP1(bank);
-            totalOutputJoltage += maxJoltValue;
+
+    ll solvep2(vector<string> &banks)
+    {
+        int n = banks[0].size();
+        ll totalOutput = 0;
+        ll maxJoltage;
+        int indx, currIndex;
+        for (auto it : banks)
+        {
+            maxJoltage = 0;
+            currIndex = -1;
+            for (int size = 0; size < 12; size++)
+            {
+                indx = findLargestIndex(it, currIndex + 1, n - 12 + size);
+                currIndex = indx;
+                maxJoltage = maxJoltage * 10 + (it[indx] - '0');
+            }
+            totalOutput += maxJoltage;
         }
-        return totalOutputJoltage;
-    }
-    ll solveP2(vector<string>banks) {
-        ll totalOutputJoltage = 0;
-        for(auto bank: banks) {
-            ll maxJoltValue = findMaxJoltValueP2(bank);
-            totalOutputJoltage += maxJoltValue;
-        }
-        return totalOutputJoltage;
+        return totalOutput;
     }
 };
 
-int main() {
-    Solution sol;
-    string s;
-    vector<string>banks;
+int main()
+{
     ifstream file("data.txt");
-    while (getline(file, s)) {
-        banks.push_back(s);
+    string line;
+    vector<string> banks;
+    while (getline(file, line))
+    {
+        banks.push_back(line);
     }
-    file.close();
 
-    int res1 = sol.solveP1(banks);
+    Solution sol;
+    int res1 = sol.solvep1(banks);
     print(res1);
-    ll res2 = sol.solveP2(banks);
+
+    ll res2 = sol.solvep2(banks);
     print(res2);
     return 0;
 }

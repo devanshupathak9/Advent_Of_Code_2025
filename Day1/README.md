@@ -77,6 +77,8 @@ L82
 
 The dial points to **0** a total of **3 times**. Thus, the password is **3**.
 
+**Answer: 1105**
+
 ---
 
 ### Your Task
@@ -113,3 +115,7 @@ In this example, the dial points at **0** three times at the end of a rotation, 
 
 ### Your Task
 Using password method 0x434C49434B, determine the password to open the door based on the rotations in your attached document (data.txt).
+
+**Answer: 6599**
+
+---

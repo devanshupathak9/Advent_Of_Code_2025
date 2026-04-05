@@ -37,6 +37,8 @@ The total output joltage is the sum of the maximum joltage from each bank, so in
 
 There are many batteries in front of you (data.txt). **Find the maximum joltage possible from each bank; what is the total output joltage?**
 
+Answer: **17207**
+
 ### Part 2
 
 #### The Challenge
@@ -77,3 +79,5 @@ The total output joltage is the sum of the largest joltages from each bank:
 ```
 
 **What is the new total output joltage?(data.txt)**
+
+Answer: **170997883706617**
