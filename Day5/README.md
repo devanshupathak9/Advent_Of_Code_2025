@@ -39,6 +39,8 @@ Ingredient ID 32 is spoiled.
 So, in this example, 3 of the available ingredient IDs are fresh.
 
 Process the database file from the new inventory management system (data.txt). How many of the available ingredient IDs are fresh?
+
+Answer: **638**
 <hr>
 
 ## Part: 2
@@ -58,3 +60,7 @@ Now, the second section of the database (the available ingredient IDs) is irrele
 The ingredient IDs that these ranges consider to be fresh are 3, 4, 5, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, and 20. So, in this example, the fresh ingredient ID ranges consider a total of 14 ingredient IDs to be fresh.
 
 Process the database file again (data.txt). How many ingredient IDs are considered to be fresh according to the fresh ingredient ID ranges?
+
+Answer: **352946349407338**
+
+---
