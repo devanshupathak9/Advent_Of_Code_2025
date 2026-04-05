@@ -1,2 +1,9 @@
-# Advent Of Code 2025
-### Problems and Solutions to the Advent of Code 2025!!
+### Advent of Code 2025
+
+This repository contains my solutions for Advent of Code 2025 written in C++.
+
+Language: **C++**
+
+Happy Coding! 🚀
+
+---
